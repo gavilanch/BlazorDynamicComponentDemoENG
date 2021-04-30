@@ -1,0 +1,29 @@
+﻿@page "/dynamic/example-3"
+
+<h5>Example 3: Child to parent communication - CascadingParameters</h5>
+
+<CascadingValue Value="appState">
+	<DynamicComponent Type="typeof(ButtonComponent)" />
+</CascadingValue>
+
+@code {
+	AppState appState = new AppState();
+	protected override void OnInitialized()
+	{
+		appState.Action = HandleClick;
+		appState.ActionWithParameters = HandleClickParameters;
+	}
+
+	private void HandleClick()
+	{
+		Console.WriteLine("Parent Component: Handle Click");
+	}
+
+	private void HandleClickParameters(Dictionary<string, object> parameters)
+	{
+		foreach (var parameter in parameters)
+		{
+			Console.WriteLine($"{parameter.Key}: {parameter.Value}");
+		}
+	}
+}

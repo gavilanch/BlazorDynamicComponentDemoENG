@@ -1,0 +1,16 @@
+﻿<button @onclick="HandleClick">Click me</button>
+
+@code {
+	private void HandleClick()
+	{
+		appState.Action?.Invoke();
+
+		var dictionary = new Dictionary<string, object>() { 
+		{ "key 1", "value 1" }, 
+		{ "key 2", "value 2" } };
+		
+		appState.ActionWithParameters?.Invoke(dictionary);
+	}
+
+	[CascadingParameter] public AppState appState { get; set; }
+}

@@ -1,0 +1,40 @@
+﻿@page "/dynamic/example-4"
+@inject HttpClient http
+@using System.Text.Json
+
+<h5>Example 4: Rendering a Component From a JSON</h5>
+
+@if (type != null)
+{
+	<DynamicComponent Type="type" Parameters="parameters" />
+}
+
+@code {
+	string namespaceComponents = "Blazor6.Client.Shared.";
+	Type type;
+	IDictionary<string, object> parameters = new Dictionary<string, object>();
+	protected async override Task OnInitializedAsync()
+	{
+		var json = await http.GetFromJsonAsync<JSONComponent>("/data.json");
+
+		if (json.Parameters != null)
+		{
+			foreach (var parameter in json.Parameters)
+			{
+				var jsonElement = (JsonElement)parameter.Value;
+
+				switch (parameter.Key)
+				{
+					case "title":
+						parameters.Add(parameter.Key, jsonElement.GetString());
+						break;
+					default:
+						break;
+				}
+
+			}
+		}
+
+		type = Type.GetType($"{namespaceComponents}{json.Component}");
+	}
+}

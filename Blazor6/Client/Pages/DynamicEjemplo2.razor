@@ -1,0 +1,21 @@
+﻿@page "/dynamic/example-2"
+
+<h5>Example 2: Changing the Type Dynamically</h5>
+
+<div>
+	<select @onchange="onChange">
+		<option value="@nameof(CheckboxComponent)">@nameof(CheckboxComponent)</option>
+		<option value="@nameof(TextboxComponent)">@nameof(TextboxComponent)</option>
+	</select>
+</div>
+<DynamicComponent Type="type" />
+
+@code {
+	string namespaceComponents = "Blazor6.Client.Shared.";
+	Type type = typeof(CheckboxComponent);
+
+	private void onChange(ChangeEventArgs e)
+	{
+		type = Type.GetType($"{namespaceComponents}{e.Value.ToString()}");
+	}
+}

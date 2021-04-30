@@ -1,0 +1,6 @@
+﻿{
+  "component": "SurveyPrompt",
+  "parameters": {
+    "title": "JSON Title"
+  }
+}
